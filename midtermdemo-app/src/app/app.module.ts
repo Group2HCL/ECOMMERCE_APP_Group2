@@ -20,6 +20,8 @@ import { ProductDetailsComponentUser } from './Components/product-details-user/p
 import { ProductsListComponentUser } from './Components/products-list-user/products-list.component';
 
 import { authInterceptorProviders } from './Helper/auth.interceptor';
+import { CartComponent } from './Components/cart/cart.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -36,13 +38,15 @@ import { authInterceptorProviders } from './Helper/auth.interceptor';
     UserDetailsComponent,
     UserListComponent,
     ProductDetailsComponentUser,
-    ProductsListComponentUser
+    ProductsListComponentUser,
+    CartComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    BrowserAnimationsModule
   ],
   providers: [authInterceptorProviders],
   bootstrap: [AppComponent]
