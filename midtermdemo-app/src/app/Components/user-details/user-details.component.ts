@@ -1,7 +1,10 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { UsersService } from 'src/app/Services/users1.service';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, ResolveStart, Router } from '@angular/router';
 import { Users } from 'src/app/Models/users1.model';
+import { TokenStorageService } from 'src/app/Services/token-storage.service';
+import { identifierName } from '@angular/compiler';
+import { AppComponent } from 'src/app/app.component'
 
 @Component({
   selector: 'app-user-details',
@@ -15,17 +18,27 @@ export class UserDetailsComponent implements OnInit {
   @Input() currentUser: Users = {
     username: '',
     email: '',
-    password: '', 
-  };
-  
+    password: '',
+    roles: [],
+  }
+
+  isAdmin = false;
   message = '';
 
   constructor(
     private userService: UsersService,
     private route: ActivatedRoute,
-    private router: Router) { }
+    private router: Router,
+    private tokenStorage: TokenStorageService,
+    private appComp: AppComponent) { }
 
   ngOnInit(): void {
+    for(var name in this.currentUser.roles) {
+      console.log(name)
+    }
+
+
+
     if (!this.viewMode) {
       this.message = '';
       this.getUser(this.route.snapshot.params["id"]);
@@ -67,5 +80,15 @@ export class UserDetailsComponent implements OnInit {
         error: (e) => console.error(e)
       });
   }
+
+  adminToggle(): void {
+    this.userService.adminToggle(this.currentUser.id)
+      .subscribe({
+        next: (data) => {
+          console.log(data);
+        }
+      })
+  }
+
 
 }

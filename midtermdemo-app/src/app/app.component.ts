@@ -12,6 +12,8 @@ export class AppComponent implements OnInit {
   isLoggedIn = false;
   showAdminBoard = false;
   username?: string;
+  opened = false;
+
   
   constructor(private tokenStorageService: TokenStorageService) { }
 
@@ -32,4 +34,5 @@ export class AppComponent implements OnInit {
     this.tokenStorageService.signOut();
     window.location.reload();
   }
+
 }
