@@ -23,6 +23,7 @@ import { ProductDetailsComponentUser } from './Components/product-details-user/p
 import { ProductsListComponentUser } from './Components/products-list-user/products-list.component';
 
 import { authInterceptorProviders } from './Helper/auth.interceptor';
+import { CartComponent } from './Components/cart/cart.component';
 import { UpdateProfileComponent } from './Components/update-profile/update-profile.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
@@ -42,6 +43,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     UserListComponent,
     ProductDetailsComponentUser,
     ProductsListComponentUser,
+    CartComponent
     UpdateProfileComponent
   ],
   imports: [
@@ -49,7 +51,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     AppRoutingModule,
     FormsModule,
     HttpClientModule,
-    BrowserAnimationsModule,
+    BrowserAnimationsModule
     MatSlideToggleModule,
     MatSidenavModule
   

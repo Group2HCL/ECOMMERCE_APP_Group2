@@ -24,7 +24,15 @@
     >
       
     </a>
+    <button
+    type="submit"
+    class="badge badge-success mb-2"
+    (click)="addProduct(currentProduct.id)"
+  >
+    Add to Cart
+  </button>
   </div>
+  
 
   <div *ngIf="!currentProduct">
     <br />

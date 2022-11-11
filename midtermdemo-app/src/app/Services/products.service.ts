@@ -4,6 +4,7 @@ import {Observable} from 'rxjs';
 import {Products} from '../Models/products.model';
 
 const baseUrl = 'http://localhost:8181/api/Product/products';
+const ADD_API = "http://localhost:8181/api/ShoppingCart/shoppingCart/addProduct";
 
 @Injectable({
     providedIn: 'root'
@@ -37,5 +38,9 @@ export class ProductsService {
 
     findByName(name: any): Observable<Products[]> {
         return this.http.get<Products[]>(`${baseUrl}?name=${name}`);
+      }
+
+    addToCart(id: any) {
+        this.http.get(`${ADD_API}/${id}`);
       }
 }

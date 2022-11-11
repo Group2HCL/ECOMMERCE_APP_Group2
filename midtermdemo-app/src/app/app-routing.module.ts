@@ -14,6 +14,7 @@ import { UserDetailsComponent } from './Components/user-details/user-details.com
 import { UserListComponent } from './Components/user-list/user-list.component';
 import { ProductDetailsComponentUser } from './Components/product-details-user/product-details.component';
 import { ProductsListComponentUser } from './Components/products-list-user/products-list.component';
+import { CartComponent } from './Components/cart/cart.component';
 import { UpdateProfileComponent } from './Components/update-profile/update-profile.component';
 
 const routes: Routes = [
@@ -31,6 +32,7 @@ const routes: Routes = [
   {path: 'users/:id', component: UserDetailsComponent},
   {path: 'productsU', component: ProductsListComponentUser},
   {path: 'productsU/:id', component: ProductDetailsComponentUser},
+  {path: 'cart', component: CartComponent}
   {path: 'profile/update', component: UpdateProfileComponent}
 ];
 
