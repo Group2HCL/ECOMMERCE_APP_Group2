@@ -3,8 +3,9 @@ import { UsersService } from 'src/app/Services/users1.service';
 import { ActivatedRoute, ResolveStart, Router } from '@angular/router';
 import { Users } from 'src/app/Models/users1.model';
 import { TokenStorageService } from 'src/app/Services/token-storage.service';
-import { identifierName } from '@angular/compiler';
+import { identifierName, ThisReceiver } from '@angular/compiler';
 import { AppComponent } from 'src/app/app.component'
+import { map } from 'rxjs/internal/operators/map';
 
 @Component({
   selector: 'app-user-details',
@@ -22,8 +23,11 @@ export class UserDetailsComponent implements OnInit {
     roles: [],
   }
 
-  isAdmin = false;
+  
   message = '';
+  userRoles: any;
+  roleName = '';
+  isAdmin = false;
 
   constructor(
     private userService: UsersService,
@@ -33,29 +37,38 @@ export class UserDetailsComponent implements OnInit {
     private appComp: AppComponent) { }
 
   ngOnInit(): void {
-    for(var name in this.currentUser.roles) {
-      console.log(name)
-    }
-
-
-
     if (!this.viewMode) {
       this.message = '';
       this.getUser(this.route.snapshot.params["id"]);
     }
   }
 
+  adminToggle(): void {
+    this.userService.adminToggle(this.currentUser.id)
+      .pipe(map(resp => ({
+        isAdmin:resp
+      })))
+      .subscribe(resp => console.log())
+  }
+
+
   getUser(id: string): void {
     this.userService.get(id)
       .subscribe({
         next: (data) => {
           this.currentUser = data;
-          console.log(data);
+          this.userRoles = (this.currentUser.roles)
+          console.log(this.userRoles)
+          for(let i =0; i <this.userRoles.length; i++) {
+             if(this.userRoles[i].name === 'ROLE_ADMIN') {
+             this.isAdmin =true; 
+             }  
+          }
+          console.log(this.isAdmin)
         },
         error: (e) => console.error(e)
       });
   }
-
 
   updateUser(): void {
     this.message = '';
@@ -80,15 +93,5 @@ export class UserDetailsComponent implements OnInit {
         error: (e) => console.error(e)
       });
   }
-
-  adminToggle(): void {
-    this.userService.adminToggle(this.currentUser.id)
-      .subscribe({
-        next: (data) => {
-          console.log(data);
-        }
-      })
-  }
-
 
 }

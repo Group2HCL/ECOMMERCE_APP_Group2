@@ -2,7 +2,7 @@
   <div *ngIf="currentUser.id">
     <h4>User</h4>
     <div>
-      <label><strong>UserName:</strong></label> {{ currentUser.username }}
+      <label><strong>Username:</strong></label> {{ currentUser.username }}
     </div>
     <div>
       <label><strong>Email:</strong></label> {{ currentUser.email }}
@@ -11,11 +11,12 @@
       <label><strong>Password:</strong></label> {{ currentUser.password }}
     </div>
     <div>
-      <label><strong>Roles:</strong></label>  <!-- Create for loop --> {{ currentUser.roles[i].name }}
+      <label><strong> Roles:</strong> <div *ngFor="let roles of currentUser.roles"> {{ roles.name }} </div> </label>
+      
     </div>
-    <div>
-      <label><strong>Admin Rights:</strong></label> {{isAdmin}}  
-    </div>
+    <!-- <div *ngFor = 'let roles of currentUser.roles' *ngIf ='roles.name == "ROLE_ADMIN" ? isAdmin = true; false'  >
+      <label><strong> Admin Rights: </strong></label>
+    </div> -->
 
 
     <a class="badge badge-warning" routerLink="/users/{{ currentUser.id }}">
@@ -49,15 +50,15 @@
         <input type="text" class="form-control" id="password" [(ngModel)]="currentUser.password" name="password" />
       </div>
 
-      
+
       <div>
         <div> Allow Admin Priveleges
-          <mat-slide-toggle color="primary" (click)="adminToggle()" #toggleBtn *ngIf = ''> {{toggleBtn.checked}} </mat-slide-toggle>
+          <mat-slide-toggle (click)="adminToggle()" [checked] = "isAdmin">  </mat-slide-toggle>
         </div>
       </div>
-      
+
     </form>
-    
+
 
     <br>
     <br>

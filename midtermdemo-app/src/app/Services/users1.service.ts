@@ -15,6 +15,10 @@ export class UsersService {
     adminToggle(id: any): Observable<any> {
         return this.http.get(`${rolesUrl}/toggle/${id}`);
     }
+    
+    checkAdmin(id:any): Observable<any> {
+        return this.http.get(`${rolesUrl}/isAdmin/${id}`);
+    }
 
     getAll(): Observable<Users[]> {
         return this.http.get<Users[]>(baseUrl);
@@ -43,8 +47,6 @@ export class UsersService {
     findByName(name: any): Observable<Users[]> {
         return this.http.get<Users[]>(`${baseUrl}?name=${name}`);
     }
-
-    
 
 
 }
