@@ -1,7 +1,10 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { FormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule, HttpHeaders } from '@angular/common/http';
+import { MatSlideToggleModule,  } from '@angular/material/slide-toggle';
+import { MatSidenavModule} from '@angular/material/sidenav';
+
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -21,6 +24,7 @@ import { ProductsListComponentUser } from './Components/products-list-user/produ
 
 import { authInterceptorProviders } from './Helper/auth.interceptor';
 import { CartComponent } from './Components/cart/cart.component';
+import { UpdateProfileComponent } from './Components/update-profile/update-profile.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
@@ -39,14 +43,20 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     UserListComponent,
     ProductDetailsComponentUser,
     ProductsListComponentUser,
-    CartComponent
+    CartComponent,
+    UpdateProfileComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
     HttpClientModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    MatSlideToggleModule,
+    MatSidenavModule,
+    ReactiveFormsModule
+  
+    
   ],
   providers: [authInterceptorProviders],
   bootstrap: [AppComponent]

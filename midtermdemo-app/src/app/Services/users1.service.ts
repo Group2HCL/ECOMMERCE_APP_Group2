@@ -1,15 +1,24 @@
-import {Injectable} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
-import {Observable} from 'rxjs';
-import {Users} from '../Models/users1.model';
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { Users } from '../Models/users1.model';
 
 const baseUrl = 'http://localhost:8181/api/User/users';
+const rolesUrl = 'http://localhost:8181/api/roles'
 
 @Injectable({
     providedIn: 'root'
 })
 export class UsersService {
     constructor(private http: HttpClient) { }
+
+    adminToggle(id: any): Observable<any> {
+        return this.http.get(`${rolesUrl}/toggle/${id}`);
+    }
+    
+    checkAdmin(id:any): Observable<any> {
+        return this.http.get(`${rolesUrl}/isAdmin/${id}`);
+    }
 
     getAll(): Observable<Users[]> {
         return this.http.get<Users[]>(baseUrl);
@@ -20,11 +29,11 @@ export class UsersService {
     }
 
     create(data: any): Observable<any> {
-        return this.http.post(baseUrl,data);
+        return this.http.post(baseUrl, data);
     }
 
     update(id: any, data: any): Observable<any> {
-        return this.http.put(`${baseUrl}/${id}`,data);
+        return this.http.put(`${baseUrl}/${id}`, data);
     }
 
     delete(id: any): Observable<any> {
@@ -37,5 +46,7 @@ export class UsersService {
 
     findByName(name: any): Observable<Users[]> {
         return this.http.get<Users[]>(`${baseUrl}?name=${name}`);
-      }
+    }
+
+
 }

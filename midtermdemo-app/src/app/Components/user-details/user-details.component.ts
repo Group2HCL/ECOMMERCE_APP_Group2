@@ -1,7 +1,11 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { UsersService } from 'src/app/Services/users1.service';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, ResolveStart, Router } from '@angular/router';
 import { Users } from 'src/app/Models/users1.model';
+import { TokenStorageService } from 'src/app/Services/token-storage.service';
+import { identifierName, ThisReceiver } from '@angular/compiler';
+import { AppComponent } from 'src/app/app.component'
+import { map } from 'rxjs/internal/operators/map';
 
 @Component({
   selector: 'app-user-details',
@@ -15,15 +19,22 @@ export class UserDetailsComponent implements OnInit {
   @Input() currentUser: Users = {
     username: '',
     email: '',
-    password: '', 
-  };
+    password: '',
+    roles: [],
+  }
+
   
   message = '';
+  userRoles: any;
+  roleName = '';
+  isAdmin = false;
 
   constructor(
     private userService: UsersService,
     private route: ActivatedRoute,
-    private router: Router) { }
+    private router: Router,
+    private tokenStorage: TokenStorageService,
+    private appComp: AppComponent) { }
 
   ngOnInit(): void {
     if (!this.viewMode) {
@@ -32,17 +43,32 @@ export class UserDetailsComponent implements OnInit {
     }
   }
 
+  adminToggle(): void {
+    this.userService.adminToggle(this.currentUser.id)
+      .pipe(map(resp => ({
+        isAdmin:resp
+      })))
+      .subscribe(resp => console.log())
+  }
+
+
   getUser(id: string): void {
     this.userService.get(id)
       .subscribe({
         next: (data) => {
           this.currentUser = data;
-          console.log(data);
+          this.userRoles = (this.currentUser.roles)
+          console.log(this.userRoles)
+          for(let i =0; i <this.userRoles.length; i++) {
+             if(this.userRoles[i].name === 'ROLE_ADMIN') {
+             this.isAdmin =true; 
+             }  
+          }
+          console.log(this.isAdmin)
         },
         error: (e) => console.error(e)
       });
   }
-
 
   updateUser(): void {
     this.message = '';
